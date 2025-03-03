@@ -1,21 +1,29 @@
-function adicionar(){
-    //recuperar nome do produto, quantidade e valor
+let totalGeral = 0;
+document.getElementById('valor-total').textContent = 'R$ 0';
+
+function adicionar() {
     let produto = document.getElementById('produto').value;
-    let nomeProduto = produto.split('-')[0]; 
+    let nomeProduto = produto.split('-')[0];
     let valorUnitario = produto.split('R$')[1];
     let quantidade = document.getElementById('quantidade').value;
-    //calcular o preço e subtotal  
+    if (quantidade == '0' || quantidade == '') {
+        alert('Selecione a quantidade do produto para continuar com sua compra');
+        return;
+    }
     let preco = quantidade * valorUnitario;
-    //adicionar no carrinho
-    let listaCarrinho = document.getElementById('lista-produtos');//id do section que representa a lista do carrinho
-    listaCarrinho.innerHTML = listaCarrinho.innerHTML +  `<section class="carrinho__produtos__produto">
+    let listaCarrinho = document.getElementById('lista-produtos');
+    listaCarrinho.innerHTML = listaCarrinho.innerHTML + `<section class="carrinho__produtos__produto">
           <span class="texto-azul">${quantidade}x</span>${nomeProduto}<span class="texto-azul">R$${valorUnitario}</span>
         </section>`;
-    //atualizar o valor total
+    totalGeral = totalGeral + preco;
+    let campoTotal = document.getElementById('valor-total');
+    campoTotal.textContent = `R$ ${totalGeral}`
+    document.getElementById('quantidade').value = 0;
 }
 
+function limpar() {
+    totalGeral = 0;
+    document.getElementById('lista-produtos').innerHTML = ''
+    document.getElementById('valor-total').textContent = 'R$ 0'
 
-/* Seleciono o produto
-Seleciono a quantidade (number)
-Botão adicionar (onclick)
-As informações ficam visíveis em "produtos no carrinho" e no valor total*/
+}
